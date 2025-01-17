@@ -1,6 +1,7 @@
 package com.company.homeworkloans.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.Comment;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -27,6 +28,10 @@ public class Client {
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
+    @Comment("test panda field")
+    @Column(name = "PANDA")
+    private Boolean panda;
+
     @Column(name = "LAST_NAME", nullable = false)
     @NotNull
     private String lastName;
@@ -39,6 +44,14 @@ public class Client {
 
     @Column(name = "SALARY", precision = 19, scale = 2)
     private BigDecimal salary;
+
+    public Boolean getPanda() {
+        return panda;
+    }
+
+    public void setPanda(Boolean panda) {
+        this.panda = panda;
+    }
 
     public BigDecimal getSalary() {
         return salary;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://requestloan.title">
+    <layout>
+
+        <vbox>
+            <entityComboBox id="clientsComboBox" metaClass="Client" label="msg://com.company.homeworkloans.entity/Client">
+                <itemsQuery class="com.company.homeworkloans.entity.Client" escapeValueForLike="true"
+                            searchStringFormat="(?i)%${inputString}%">
+                    <fetchPlan extends="_base"/>
+                    <query>
+                        <![CDATA[select e from Client e where e.firstName like :searchString escape '\' order by e.firstName]]>
+                    </query>
+                </itemsQuery>
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityOpen" type="entity_open"/>
+                </actions>
+            </entityComboBox>
+            <hbox>
+                <textField id="Amount" label="msg://com.company.homeworkloans.entity/Loan.amount">
+                    <validators>
+                        <positive/>
+                    </validators>
+                </textField>
+            </hbox>
+            <hbox>
+                <button id="requestButton" text="msg://com.company.homeworkloans.view.requestloan/requestButton.text"/>
+                <button id="cancelButton" text="msg://com.company.homeworkloans.view.requestloan/cancelButton.text"/>
+            </hbox>
+        </vbox>
+    </layout>
+</view>
