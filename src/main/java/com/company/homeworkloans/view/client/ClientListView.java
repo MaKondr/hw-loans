@@ -7,13 +7,10 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.router.Route;
 import io.jmix.flowui.DialogWindows;
 import io.jmix.flowui.Dialogs;
-import io.jmix.flowui.event.view.ViewOpenedEvent;
+import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.kit.component.button.JmixButton;
 import io.jmix.flowui.view.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 
 @Route(value = "clients", layout = MainView.class)
 @ViewController("Client.list")
@@ -21,20 +18,18 @@ import org.springframework.context.ApplicationEventPublisher;
 @LookupComponent("clientsDataGrid")
 @DialogMode(width = "64em")
 public class ClientListView extends StandardListView<Client> {
-    private static final Logger log = LoggerFactory.getLogger(ClientListView.class);
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+
     @Autowired
     private DialogWindows dialogWindows;
+    @ViewComponent
+    private DataGrid<Client> clientsDataGrid;
 
-    @Subscribe("requestLoan")
-    public void onRequestLoanClick(ClickEvent<JmixButton> event) {
-        dialogWindows.view(this, Requestloan.class)
-                .withAfterCloseListener(afterCloseEvent -> {
-                    // Действие после закрытия диалога
-                    System.out.println("Dialog closed");
-                })
-                .open();
+    @Subscribe(id = "requestLoan", subject = "clickListener")
+    public void onRequestLoanClick(final ClickEvent<JmixButton> event) {
+        Client client = clientsDataGrid.getSingleSelectedItem();
+        DialogWindow<Requestloan> window = dialogWindows.view(this, Requestloan.class).build();
+        window.getView().setClient(client);
+        window.open();
     }
 
 }

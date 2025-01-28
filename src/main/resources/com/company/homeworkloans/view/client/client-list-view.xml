@@ -34,7 +34,11 @@
             <button id="removeBtn" action="clientsDataGrid.remove"/>
             <button id="createBtn" action="clientsDataGrid.create"/>
             <button id="editBtn" action="clientsDataGrid.edit"/>
-            <button id="requestLoan" text="msg://com.company.homeworkloans.view.requestloan/requestloan.title" />
+            <button id="requestLoan" text="msg://com.company.homeworkloans.view.requestloan/requestloan.title" >
+                <prefix>
+                    <icon icon="vaadin:dollar"/>
+                </prefix>
+            </button>
             <simplePagination id="pagination" dataLoader="clientsDl"/>
         </hbox>
         <dataGrid id="clientsDataGrid"
