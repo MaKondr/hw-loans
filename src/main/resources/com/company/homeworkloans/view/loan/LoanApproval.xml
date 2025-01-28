@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://loanApproval.title"
+      focusComponent="loansDataGrid">
+    <data>
+        <collection id="loansDc"
+                    class="com.company.homeworkloans.entity.Loan">
+            <fetchPlan extends="_base">
+                <property name="amount"/>
+                <property name="requestDate"/>
+                <property name="status"/>
+                <property name="client" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="loansDl" readOnly="true">
+                <query>
+                    <![CDATA[select l from Loan l
+                    where l.status = 'R'  ]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="loansDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <simplePagination id="pagination" dataLoader="loansDl"/>
+        </hbox>
+        <dataGrid id="loansDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="loansDc"
+                  columnReorderingAllowed="true">
+            <actions>
+            </actions>
+            <columns resizable="true">
+                <column property="requestDate"/>
+                <column property="client" key="fullName">
+                </column>
+                <column property="amount"/>
+                <column property="client.phoneNumber"/>
+                <column property="client.salary"/>
+                <column property="client.age"/>
+
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
