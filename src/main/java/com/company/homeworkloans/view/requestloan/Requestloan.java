@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Route(value = "RequestLoan", layout = MainView.class)
 @ViewController(id = "Requestloan")
 @ViewDescriptor(path = "RequestLoan.xml")
-//@DialogMode(width = "50em", height = "37.5em")
+@DialogMode()
 public class Requestloan extends StandardView {
     @ViewComponent
     private EntityComboBox<Client> clientsComboBox;
