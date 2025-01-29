@@ -23,6 +23,7 @@
             <textField id="phoneNumberField" property="phoneNumber"/>
             <datePicker id="birthDateField" property="birthDate"/>
             <textField id="salaryField" property="salary"/>
+            <checkbox id="pandaField" property="panda"/>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>

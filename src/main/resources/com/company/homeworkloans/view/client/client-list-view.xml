@@ -31,9 +31,14 @@
             <properties include=".*"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="removeBtn" action="clientsDataGrid.remove"/>
             <button id="createBtn" action="clientsDataGrid.create"/>
             <button id="editBtn" action="clientsDataGrid.edit"/>
-            <button id="removeBtn" action="clientsDataGrid.remove"/>
+            <button id="requestLoan" text="msg://com.company.homeworkloans.view.requestloan/requestloan.title" >
+                <prefix>
+                    <icon icon="vaadin:dollar"/>
+                </prefix>
+            </button>
             <simplePagination id="pagination" dataLoader="clientsDl"/>
         </hbox>
         <dataGrid id="clientsDataGrid"
@@ -52,6 +57,7 @@
                 <column property="phoneNumber"/>
                 <column property="birthDate"/>
                 <column property="salary"/>
+                <column property="panda"/>
             </columns>
         </dataGrid>
         <hbox id="lookupActions" visible="false">

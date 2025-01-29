@@ -1,17 +1,13 @@
 package com.company.homeworkloans.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import io.jmix.core.metamodel.annotation.*;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 @JmixEntity
@@ -27,6 +23,10 @@ public class Client {
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
+    @Comment("test panda field")
+    @Column(name = "PANDA")
+    private Boolean panda;
+
     @Column(name = "LAST_NAME", nullable = false)
     @NotNull
     private String lastName;
@@ -39,6 +39,23 @@ public class Client {
 
     @Column(name = "SALARY", precision = 19, scale = 2)
     private BigDecimal salary;
+
+    @Comment("this transient calculate field for age")
+    @JmixProperty
+    @Transient
+    private Integer age;
+
+    public Integer getAge() {
+        return Period.between(birthDate, LocalDate.now()).getYears();
+    }
+
+    public Boolean getPanda() {
+        return panda;
+    }
+
+    public void setPanda(Boolean panda) {
+        this.panda = panda;
+    }
 
     public BigDecimal getSalary() {
         return salary;
