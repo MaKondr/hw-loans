@@ -21,7 +21,8 @@
         </collection>
     </data>
     <facets>
-        <dataLoadCoordinator auto="true"/>
+        <dataLoadCoordinator containerPrefix="loansDc" auto="true">
+        </dataLoadCoordinator>
         <urlQueryParameters>
             <genericFilter component="genericFilter"/>
             <pagination component="pagination"/>
@@ -37,6 +38,8 @@
             <properties include=".*"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="approveBtn" icon="vaadin:check" text="msg://approveBtn.text"/>
+            <button id="rejectBtn" icon="vaadin:ban" text="msg://rejectBtn.text"/>
             <simplePagination id="pagination" dataLoader="loansDl"/>
         </hbox>
         <dataGrid id="loansDataGrid"
