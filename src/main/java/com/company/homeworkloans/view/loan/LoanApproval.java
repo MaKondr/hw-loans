@@ -5,19 +5,16 @@ import com.company.homeworkloans.entity.LoanStatus;
 import com.company.homeworkloans.view.main.MainView;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.DataManager;
 import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.kit.component.button.JmixButton;
+import io.jmix.flowui.model.CollectionContainer;
 import io.jmix.flowui.model.CollectionLoader;
 import io.jmix.flowui.model.InstanceContainer;
 import io.jmix.flowui.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 
 @Route(value = "LoanApproval", layout = MainView.class)
@@ -34,6 +31,10 @@ public class LoanApproval extends StandardListView<Loan> {
     private Notifications notifications;
     @ViewComponent
     private CollectionLoader<Loan> loansDl;
+    @ViewComponent
+    private CollectionLoader<Loan> previousLoansDl;
+    @ViewComponent
+    private CollectionContainer<Loan> previousLoansDc;
 
     @Subscribe(id = "approveBtn", subject = "clickListener")
     public void onApproveBtnClick(final ClickEvent<JmixButton> event) {
@@ -75,6 +76,23 @@ public class LoanApproval extends StandardListView<Loan> {
 
     }
 
+    @Subscribe
+    public void onBeforeShow(final BeforeShowEvent event) {
+        loansDl.load();
+    }
+
+    @Subscribe(id = "loansDc", target = Target.DATA_CONTAINER)
+    public void onLoansDcItemChange(final InstanceContainer.ItemChangeEvent<Loan> event) {
+        if (event.getItem() == null) {
+            previousLoansDc.getMutableItems().clear();
+            return;
+        }
+        previousLoansDl.setParameter("client", event.getItem().getClient());
+        previousLoansDl.setParameter("loan", event.getItem());
+        previousLoansDl.load();
+    }
+
+    
 
 
 }
